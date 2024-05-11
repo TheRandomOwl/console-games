@@ -64,9 +64,13 @@ def exit_game():
   print("Goodbye!")
   exit()
 
+def print_score(players):
+  print(f"Score: {players[0].name}: {players[0].points}, {players[1].name}: {players[1].points}")
+
 def main():
   p1 = Player("Player 1", "X")
   p2 = Player("Player 2", "O")
+  players = [p1, p2]
 
   options = {
     "1": {"name": "Tic Tac Toe", "function": tic_tac_toe},
@@ -77,6 +81,7 @@ def main():
   clear_console()
   print("Welcome to console games! Select a game to play")
   while True:
+    print_score(players)
     for i, option in options.items():
       print(f"{i}. {option['name']}")
       
@@ -84,7 +89,7 @@ def main():
     if choice in options:
       selected_option = options[choice]
       if selected_option["name"] != "Exit":
-        selected_option["function"]([p1, p2])
+        selected_option["function"](players)
       else:
         # dont pass players to exit function
         selected_option["function"]()
