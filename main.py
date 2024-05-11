@@ -10,6 +10,16 @@ def tic_tac_toe(players):
   clear_console()
   print(board)
   
+  def replay():
+    play_again = input("Do you want to play again? (y/n): ")
+    if play_again.lower() == "y":
+      board.clear()
+      clear_console()
+      print(board)
+      return True
+    else:
+      return False
+
   while True:
     for player in players:
       print(f"{player.name}'s turn")
@@ -20,6 +30,9 @@ def tic_tac_toe(players):
         except ValueError:
           print("Invalid input, try again")
           continue
+        except EOFError:
+          clear_console()
+          return
         if board.is_valid_move(row, col):
           board.add_move(row, col, player.symbol)
           clear_console()
@@ -29,21 +42,11 @@ def tic_tac_toe(players):
             print(f"{player.name} wins!")
             player.points += 1
             print(f"Score: {players[0].name}: {players[0].points}, {players[1].name}: {players[1].points}")
-            play_again = input("Do you want to play again? (y/n): ")
-            if play_again.lower() == "y":
-              board.clear()
-              clear_console()
-              print(board)
-            else:
+            if not replay():
               return
           elif board.is_full():
             print("It's a tie!")
-            play_again = input("Do you want to play again? (y/n): ")
-            if play_again.lower() == "y":
-              board.clear()
-              clear_console()
-              print(board)
-            else:
+            if not replay():
               return
           break
         else:
