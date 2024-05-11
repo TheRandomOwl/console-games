@@ -66,9 +66,9 @@ def main():
   p2 = Player("Player 2", "O")
 
   options = {
-    1: {"name": "Tic Tac Toe", "function": tic_tac_toe},
-    2: {"name": "Connect Four", "function": connect_four},
-    3: {"name": "Exit", "function": exit_game}
+    "1": {"name": "Tic Tac Toe", "function": tic_tac_toe},
+    "2": {"name": "Connect Four", "function": connect_four},
+    "3": {"name": "Exit", "function": exit_game}
   }
 
   clear_console()
@@ -77,7 +77,7 @@ def main():
     for i, option in options.items():
       print(f"{i}. {option['name']}")
       
-    choice = int(input("Enter the number of the game you want to play: "))
+    choice = input("Enter the number of the game you want to play: ")
     if choice in options:
       selected_option = options[choice]
       if selected_option["name"] != "Exit":
