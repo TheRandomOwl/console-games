@@ -12,9 +12,9 @@ def tic_tac_toe(players):
   
   def replay():
     play_again = input("Do you want to play again? (y/n): ")
+    clear_console()
     if play_again.lower() == "y":
       board.clear()
-      clear_console()
       print(board)
       return True
     else:
