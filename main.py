@@ -53,7 +53,40 @@ def tic_tac_toe(players):
           print("Invalid move, try again")
 
 def connect_four(players):
-  print("Connect Four")
+  import connect4.c4 as c4
+  board = c4.Grid()
+  clear_console()
+  print(board)
+  while True:
+    for player in players:
+      print(f"{player.name}'s turn")
+      while True:
+        try:
+          col = int(input("Enter column: "))
+        except ValueError:
+          print("Invalid input, try again")
+          continue
+        except EOFError:
+          clear_console()
+          return
+        if board.is_valid_move(col):
+          board.add_move(col, player.symbol)
+          clear_console()
+          print(board)
+          winner = board.check_winner()
+          if winner:
+            print(f"{player.name} wins!")
+            player.points += 1
+            print_score(players)
+            if not replay(board):
+              return
+          elif board.is_full():
+            print("It's a tie!")
+            if not replay(board):
+              return
+          break
+        else:
+          print("Invalid move, try again")
 
 def clear_console():
     import os
