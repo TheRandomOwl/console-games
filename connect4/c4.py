@@ -51,3 +51,12 @@ class Grid:
                     return self.grid[i][j+3]
 
         return None
+    
+    def __str__(self):
+        board = ''
+        for row in range(5, -1, -1):
+            board += '|'
+            for col in range(7):
+                board += self.grid[row][col] + '|'
+            board += '\n'
+        return board
