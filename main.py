@@ -117,8 +117,12 @@ def main():
     print_score(players)
     for i, option in options.items():
       print(f"{i}. {option['name']}")
-      
-    choice = input("Enter the number of the game you want to play: ")
+    
+    try:
+      choice = input("Enter the number of the game you want to play: ")
+    except KeyboardInterrupt:
+      exit_game()
+    
     if choice in options:
       selected_option = options[choice]
       if selected_option["name"] != "Exit":
