@@ -4,21 +4,21 @@ class Player:
         self.symbol = symbol
         self.points = 0
 
+def replay(b):
+    play_again = input("Do you want to play again? (y/n): ")
+    clear_console()
+    if play_again.lower() == "y":
+      b.clear()
+      print(b)
+      return True
+    else:
+      return False
+
 def tic_tac_toe(players):
   import tic.ttt as ttt
   board = ttt.Grid()
   clear_console()
   print(board)
-  
-  def replay():
-    play_again = input("Do you want to play again? (y/n): ")
-    clear_console()
-    if play_again.lower() == "y":
-      board.clear()
-      print(board)
-      return True
-    else:
-      return False
 
   while True:
     for player in players:
@@ -41,12 +41,12 @@ def tic_tac_toe(players):
           if winner:
             print(f"{player.name} wins!")
             player.points += 1
-            print(f"Score: {players[0].name}: {players[0].points}, {players[1].name}: {players[1].points}")
-            if not replay():
+            print_score(players)
+            if not replay(board):
               return
           elif board.is_full():
             print("It's a tie!")
-            if not replay():
+            if not replay(board):
               return
           break
         else:
