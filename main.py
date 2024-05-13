@@ -1,8 +1,22 @@
+import connect4.c4 as c4
+import os
+import tic.ttt as ttt
+
 class Player:
-    def __init__(self, name, symbol):
-        self.name = name
-        self.symbol = symbol
-        self.points = 0
+  def __init__(self, name, symbol):
+    self.name = name
+    self.symbol = symbol
+    self.points = 0
+
+class Human(Player):
+  def __init__(self, name, symbol):
+    super().__init__(name, symbol)
+    self.cpu = False
+
+class Computer(Player):
+  def __init__(self, name, symbol):
+    super().__init__(name, symbol)
+    self.cpu = True
 
 def replay(b):
     play_again = input("Do you want to play again? (y/n): ")
@@ -15,7 +29,6 @@ def replay(b):
       return False
 
 def tic_tac_toe(players):
-  import tic.ttt as ttt
   board = ttt.Grid()
   clear_console()
   print(board)
@@ -53,7 +66,6 @@ def tic_tac_toe(players):
           print("Invalid move, try again")
 
 def connect_four(players):
-  import connect4.c4 as c4
   board = c4.Grid()
   clear_console()
   print(board)
@@ -89,7 +101,6 @@ def connect_four(players):
           print("Invalid move, try again")
 
 def clear_console():
-    import os
     os.system("cls" if os.name == "nt" else "clear")
     
 def exit_game():
@@ -101,8 +112,9 @@ def print_score(players):
   print(f"Score: {players[0].name}: {players[0].points}, {players[1].name}: {players[1].points}")
 
 def main():
-  p1 = Player("Player 1", "X")
-  p2 = Player("Player 2", "O")
+  p1 = Human("Player 1", "X")
+  p2 = Computer("Player 2", "O")
+  p2.cpu = True
   players = [p1, p2]
 
   options = {
