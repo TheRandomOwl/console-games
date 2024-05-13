@@ -1,6 +1,6 @@
-import connect4.c4 as c4
 import os
-import tic.ttt as ttt
+from tic import ttt
+from connect4 import c4
 
 class Player:
   def __init__(self, name, symbol):
