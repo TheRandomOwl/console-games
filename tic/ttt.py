@@ -36,5 +36,13 @@ class Grid:
     def clear(self):
         self.grid = [[' ' for i in range(3)] for j in range(3)]
 
+    def empty_cells(self):
+        cells = []
+        for i in range(3):
+            for j in range(3):
+                if self.grid[i][j] == ' ':
+                    cells.append((i, j))
+        return cells
+    
     def __str__(self):
         return f"╔═══╦═══╦═══╗\n║ {self.grid[0][0]} ║ {self.grid[0][1]} ║ {self.grid[0][2]} ║\n╠═══╬═══╬═══╣\n║ {self.grid[1][0]} ║ {self.grid[1][1]} ║ {self.grid[1][2]} ║\n╠═══╬═══╬═══╣\n║ {self.grid[2][0]} ║ {self.grid[2][1]} ║ {self.grid[2][2]} ║\n╚═══╩═══╩═══╝"
