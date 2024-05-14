@@ -53,7 +53,7 @@ def get_best_move(board, symbol):
     best_move = None
     for cell in board.empty_cells():
         board.add_move(cell[0], cell[1], symbol)
-        score = minimax(board, 'O' if symbol == 'X' else 'X')
+        score = minimax(board, 'O' if symbol == 'X' else 'X', maximizing=False)
         board.add_move(cell[0], cell[1], ' ')
         if score > best_score:
             best_score = score
