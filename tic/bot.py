@@ -1,8 +1,8 @@
 def minimax(board, symbol, maximizing=True, depth=0):
     """
-    Minimax algorithm with alpha-beta pruning for tic-tac-toe.
+    Minimax algorithm for tic-tac-toe.
 
-    This function returns the best move for the given board and player.
+    This function returns the best score for the given board and player.
 
     Parameters:
     - board: The current state of the tic-tac-toe board.
@@ -12,16 +12,17 @@ def minimax(board, symbol, maximizing=True, depth=0):
 
     Returns:
     - The best score for the given board and player.
-
     """
-    if board.check_winner() == 'X':
+    winner = board.check_winner()
+    if winner == 'X':
         return -10 + depth
-    elif board.check_winner() == 'O':
+    elif winner == 'O':
         return 10 - depth
     elif board.is_full():
         return 0
+
     if maximizing:
-        best_score = -100
+        best_score = -float('inf')
         for cell in board.empty_cells():
             board.add_move(cell[0], cell[1], symbol)
             score = minimax(board, 'O' if symbol == 'X' else 'X', False, depth + 1)
@@ -29,7 +30,7 @@ def minimax(board, symbol, maximizing=True, depth=0):
             best_score = max(score, best_score)
         return best_score
     else:
-        best_score = 100
+        best_score = float('inf')
         for cell in board.empty_cells():
             board.add_move(cell[0], cell[1], symbol)
             score = minimax(board, 'O' if symbol == 'X' else 'X', True, depth + 1)
@@ -47,15 +48,14 @@ def get_best_move(board, symbol):
 
     Returns:
     - The best move for the given board and player.
-
     """
-    best_score = -100
+    best_score = -float('inf') if symbol == 'X' else float('inf')
     best_move = None
     for cell in board.empty_cells():
         board.add_move(cell[0], cell[1], symbol)
         score = minimax(board, 'O' if symbol == 'X' else 'X', maximizing=False)
         board.add_move(cell[0], cell[1], ' ')
-        if score > best_score:
+        if (symbol == 'X' and score > best_score) or (symbol == 'O' and score < best_score):
             best_score = score
             best_move = cell
     return best_move
