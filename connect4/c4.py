@@ -52,6 +52,13 @@ class Grid:
 
         return None
     
+    def free_col(self):
+        cols = []
+        for i in range(7):
+            if self.is_valid_move(i):
+                cols.append(i)
+        return cols
+    
     def __str__(self):
         board = ''
         for row in range(5, -1, -1):
