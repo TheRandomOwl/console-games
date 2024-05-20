@@ -1,6 +1,6 @@
 from c4 import Grid
 
-def minimax(board, symbol, maximizing, depth):
+def minimax(board, symbol, maximizing, depth, alpha, beta):
     """
     Minimax algorithm for connect four with alpha beta pruning.
 
@@ -8,6 +8,9 @@ def minimax(board, symbol, maximizing, depth):
     - board: The current state of the tic-tac-toe board.
     - symbol: The symbol ('X' or 'O') of the player making the move.
     - maximizing: A boolean value to indicate if the player is maximizing or minimizing.
+    - depth: The current depth of the search.
+    - alpha: The alpha value for alpha-beta pruning.
+    - beta: The beta value for alpha-beta pruning.
 
     Returns:
     - The best score for the given board and player.
@@ -25,16 +28,22 @@ def minimax(board, symbol, maximizing, depth):
         for move in board.free_col():
             old = [row.copy() for row in board.grid]
             board.add_move(move, symbol)
-            value = max(value, minimax(board, symbol, False, depth-1))
+            value = max(value, minimax(board, symbol, False, depth-1, alpha, beta))
             board.grid = old
+            alpha = max(alpha, value)
+            if alpha >= beta:
+                break
         return value
     else:
         value = float('inf')
         for move in board.free_col():
             old = [row.copy() for row in board.grid]
             board.add_move(move, 'X' if symbol == 'O' else 'O')
-            value = min(value, minimax(board, symbol, True, depth-1))
+            value = min(value, minimax(board, symbol, True, depth-1, alpha, beta))
             board.grid = old
+            beta = min(beta, value)
+            if alpha >= beta:
+                break
         return value
     
 def best_move(board, symbol):
@@ -53,7 +62,7 @@ def best_move(board, symbol):
     for move in board.free_col():
         old = [row.copy() for row in board.grid]
         board.add_move(move, symbol)
-        score = minimax(board, symbol, False, 6)
+        score = minimax(board, symbol, False, 8, -float('inf'), float('inf'))
         board.grid = old
         if score > best_score:
             best_score = score
