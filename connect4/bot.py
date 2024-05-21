@@ -1,5 +1,51 @@
 from c4 import Grid
 
+def evaluate_board(board, symbol):
+    """
+    Evaluation function to assess the board state for the given symbol.
+    
+    Parameters:
+    - board: The current state of the Connect Four board.
+    - symbol: The symbol ('X' or 'O') of the player to evaluate for.
+    
+    Returns:
+    - A score representing the board evaluation.
+    """
+    # Implement a heuristic to evaluate the board
+    score = 0
+    # Example: +10 for 3 in a row, -10 for opponent's 3 in a row, etc.
+    # This is a placeholder and should be replaced with a proper evaluation.
+    # Add your evaluation logic here.
+
+    # Check rows
+    for row in range(6):
+        for col in range(4):
+            if board.grid[row][col:col+4].count(symbol) == 3:
+                score += 10
+            if board.grid[row][col:col+4].count('X' if symbol == 'O' else 'O') == 3:
+                score -= 10
+    # Check columns
+    for col in range(7):
+        for row in range(3):
+            if [board.grid[row+i][col] for i in range(4)].count(symbol) == 3:
+                score += 10
+            if [board.grid[row+i][col] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+                score -= 10
+    # Check diagonals
+    for row in range(3):
+        for col in range(4):
+            if [board.grid[row+i][col+i] for i in range(4)].count(symbol) == 3:
+                score += 10
+            if [board.grid[row+i][col+i] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+                score -= 10
+    for row in range(3):
+        for col in range(4):
+            if [board.grid[row+i][col-i] for i in range(4)].count(symbol) == 3:
+                score += 10
+            if [board.grid[row+i][col-i] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+                score -= 10
+    return score
+
 def minimax(board, symbol, maximizing, depth, alpha, beta):
     """
     Minimax algorithm for connect four with alpha beta pruning.
@@ -21,7 +67,7 @@ def minimax(board, symbol, maximizing, depth, alpha, beta):
     elif board.is_full():
         return 0
     elif depth == 0:
-        return 0
+        return evaluate_board(board, symbol)
     
     if maximizing:
         value = -float('inf')
