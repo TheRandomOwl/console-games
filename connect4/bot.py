@@ -19,9 +19,6 @@ def evaluate_board(board, symbol):
 
     opponent = 'X' if symbol == 'O' else 'O'
 
-    for row in board.grid:
-        pass
-
     # prioritize center column
     center_col = [row[3] for row in board.grid]
     score += center_col.count(symbol) * 5
