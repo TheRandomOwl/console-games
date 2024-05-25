@@ -17,6 +17,10 @@ def evaluate_board(board, symbol):
     # This is a placeholder and should be replaced with a proper evaluation.
     # Add your evaluation logic here.
 
+    # prioritize center column
+    center_col = [row[3] for row in board.grid]
+    score += center_col.count(symbol) * 5
+
     # Check rows
     for row in range(6):
         for col in range(4):
