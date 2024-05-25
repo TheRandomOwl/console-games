@@ -72,7 +72,7 @@ def minimax(board, symbol, maximizing, depth, alpha, beta):
 
     state = board.check_winner()
     if state:
-        return 1 if state == symbol else -1
+        return 10 if state == symbol else -10
     elif board.is_full():
         return 0
     elif depth == 0:
