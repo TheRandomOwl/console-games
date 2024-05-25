@@ -124,7 +124,7 @@ def best_move(board, symbol):
             best_move = move
     return best_move
 
-def main():
+def test():
     board = Grid()
     print(board)
     while board.check_winner() == None and not board.is_full():
@@ -140,6 +140,9 @@ def main():
         print("You lose!")
     else:
         print("It's a draw!")
+
+def main():
+    test()
         
 if __name__ == "__main__":
     main()
