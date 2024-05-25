@@ -17,6 +17,11 @@ def evaluate_board(board, symbol):
     # This is a placeholder and should be replaced with a proper evaluation.
     # Add your evaluation logic here.
 
+    opponent = 'X' if symbol == 'O' else 'O'
+
+    for row in board.grid:
+        pass
+
     # prioritize center column
     center_col = [row[3] for row in board.grid]
     score += center_col.count(symbol) * 5
@@ -26,27 +31,27 @@ def evaluate_board(board, symbol):
         for col in range(4):
             if board.grid[row][col:col+4].count(symbol) == 3:
                 score += 10
-            if board.grid[row][col:col+4].count('X' if symbol == 'O' else 'O') == 3:
+            if board.grid[row][col:col+4].count(opponent) == 3:
                 score -= 10
     # Check columns
     for col in range(7):
         for row in range(3):
             if [board.grid[row+i][col] for i in range(4)].count(symbol) == 3:
                 score += 10
-            if [board.grid[row+i][col] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+            if [board.grid[row+i][col] for i in range(4)].count(opponent) == 3:
                 score -= 10
     # Check diagonals
     for row in range(3):
         for col in range(4):
             if [board.grid[row+i][col+i] for i in range(4)].count(symbol) == 3:
                 score += 10
-            if [board.grid[row+i][col+i] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+            if [board.grid[row+i][col+i] for i in range(4)].count(opponent) == 3:
                 score -= 10
     for row in range(3):
         for col in range(4):
             if [board.grid[row+i][col-i] for i in range(4)].count(symbol) == 3:
                 score += 10
-            if [board.grid[row+i][col-i] for i in range(4)].count('X' if symbol == 'O' else 'O') == 3:
+            if [board.grid[row+i][col-i] for i in range(4)].count(opponent) == 3:
                 score -= 10
     return score
 
@@ -65,6 +70,9 @@ def minimax(board, symbol, maximizing, depth, alpha, beta):
     Returns:
     - The best score for the given board and player.
     """
+
+    opponent = 'X' if symbol == 'O' else 'O'
+
     state = board.check_winner()
     if state:
         return 1 if state == symbol else -1
@@ -88,7 +96,7 @@ def minimax(board, symbol, maximizing, depth, alpha, beta):
         value = float('inf')
         for move in board.free_col():
             old = [row.copy() for row in board.grid]
-            board.add_move(move, 'X' if symbol == 'O' else 'O')
+            board.add_move(move, opponent)
             value = min(value, minimax(board, symbol, True, depth-1, alpha, beta))
             board.grid = old
             beta = min(beta, value)
