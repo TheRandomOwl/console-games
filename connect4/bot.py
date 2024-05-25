@@ -120,7 +120,7 @@ def best_move(board, symbol):
     for move in board.free_col():
         old = [row.copy() for row in board.grid]
         board.add_move(move, symbol)
-        score = minimax(board, symbol, False, 8, -float('inf'), float('inf'))
+        score = minimax(board, symbol, False, 6, -float('inf'), float('inf'))
         board.grid = old
         if score > best_score:
             best_score = score
