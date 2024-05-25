@@ -112,6 +112,42 @@ def test_check_winner():
                  ['O', 'O', 'O', 'X', 'O', 'O', 'O']]
     assert grid.check_winner() == None
 
+def test_free_col():
+    """
+    Test case for checking the available columns.
+    """
+    grid = Grid()
+
+    # Test when all columns are empty
+    assert grid.free_col() == [0, 1, 2, 3, 4, 5, 6]
+
+    # Test when some columns are filled
+    grid.grid = [['X', 'O', ' ', ' ', ' ', ' ', ' '],
+                 ['X', 'O', ' ', ' ', ' ', ' ', ' '],
+                 ['X', 'O', ' ', ' ', ' ', ' ', ' '],
+                 ['X', ' ', ' ', ' ', ' ', ' ', ' '],
+                 [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                 [' ', ' ', ' ', ' ', ' ', ' ', ' ']]
+    assert grid.free_col() == [0, 1, 2, 3, 4, 5, 6]
+
+    # Test when all columns are filled
+    grid.grid = [['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X']]
+    assert grid.free_col() == []
+
+    # test when some columns are filled
+    grid.grid = [['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+                 ['X', 'O', 'X', 'O', 'X', 'O', ' ']]
+    assert grid.free_col() == [6]
+
 def main():
     test_clear()
     test_add_move()
