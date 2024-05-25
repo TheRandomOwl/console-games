@@ -23,6 +23,16 @@ def evaluate_board(board, symbol):
     center_col = [row[3] for row in board.grid]
     score += center_col.count(symbol) * 5
 
+    for row in board.grid:
+        if ' ' + opponent * 2 + ' ' in ''.join(row):
+            score -= 10
+        if ' ' + symbol * 2 + ' ' in ''.join(row):
+            score += 10
+        if ' ' + opponent * 3 + ' ' in ''.join(row):
+            score -= 20
+        if ' ' + symbol * 3 + ' ' in ''.join(row):
+            score += 20
+    
     # Check rows
     for row in range(6):
         for col in range(4):
