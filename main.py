@@ -1,22 +1,14 @@
 import os
 from tic import ttt
+from tic import bot
 from connect4 import c4
 
 class Player:
-  def __init__(self, name, symbol):
+  def __init__(self, name, symbol, is_cpu=False):
     self.name = name
     self.symbol = symbol
     self.points = 0
-
-class Human(Player):
-  def __init__(self, name, symbol):
-    super().__init__(name, symbol)
     self.cpu = False
-
-class Computer(Player):
-  def __init__(self, name, symbol):
-    super().__init__(name, symbol)
-    self.cpu = True
 
 def replay(b):
     play_again = input("Do you want to play again? (y/n): ")
@@ -112,8 +104,8 @@ def print_score(players):
   print(f"Score: {players[0].name}: {players[0].points}, {players[1].name}: {players[1].points}")
 
 def main():
-  p1 = Human("Player 1", "X")
-  p2 = Computer("Player 2", "O")
+  p1 = Player("Player 1", "X")
+  p2 = Player("Player 2", "O", True)
   p2.cpu = True
   players = [p1, p2]
 
