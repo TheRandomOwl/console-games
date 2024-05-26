@@ -1,5 +1,3 @@
-from c4 import Grid
-
 def evaluate_board(board, symbol):
     """
     Evaluation function to assess the board state for the given symbol.
@@ -133,27 +131,3 @@ def best_move(board, symbol):
             best_score = score
             best_move = move
     return best_move
-
-def test():
-    board = Grid()
-    print(board)
-    while board.check_winner() == None and not board.is_full():
-        col = int(input("Enter column: "))
-        board.add_move(col, 'X')
-        print(board)
-        col = best_move(board, 'O')
-        board.add_move(col, 'O')
-        print(board)
-    if board.check_winner() == 'X':
-        print("You win!")
-    elif board.check_winner() == 'O':
-        print("You lose!")
-    else:
-        print("It's a draw!")
-
-def main():
-    test()
-        
-if __name__ == "__main__":
-    main()
-    

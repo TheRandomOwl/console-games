@@ -1,5 +1,3 @@
-from ttt import Grid
-
 def minimax(board, symbol, maximizing):
     """
     Minimax algorithm for tic-tac-toe with alpha beta pruning.
@@ -54,37 +52,3 @@ def best_move(board, symbol):
             best_score = score
             best_move = move
     return best_move
-
-def main():
-    board = Grid()
-    print(board)
-    while True:
-        try:
-            row = int(input("Enter row: "))
-            col = int(input("Enter column: "))
-        except ValueError:
-            print("Invalid input, try again")
-            continue
-        if board.is_valid_move(row, col):
-            board.add_move(row, col, 'X')
-            print(board)
-            if board.check_winner():
-                print("You win!")
-                break
-            if board.is_full():
-                print("It's a tie!")
-                break
-            move = best_move(board, 'O')
-            board.add_move(move[0], move[1], 'O')
-            print(board)
-            if board.check_winner():
-                print("You lose!")
-                break
-            if board.is_full():
-                print("It's a tie!")
-                break
-        else:
-            print("Invalid move, try again")
-
-if __name__ == "__main__":
-    main()
