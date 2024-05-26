@@ -1,6 +1,6 @@
 import os
+import tic.bot
 from tic import ttt
-from tic import bot
 from connect4 import c4
 
 class Player:
@@ -28,34 +28,38 @@ def tic_tac_toe(players):
   while True:
     for player in players:
       print(f"{player.name}'s turn")
-      while True:
-        try:
-          row = int(input("Enter row: "))
-          col = int(input("Enter column: "))
-        except ValueError:
-          print("Invalid input, try again")
-          continue
-        except EOFError:
-          clear_console()
+      if player.cpu:
+        move = tic.bot.best_move(board, player.symbol)
+        row, col = move[0], move[1]
+      else:
+        while True:
+          try:
+            row = int(input("Enter row: "))
+            col = int(input("Enter column: "))
+          except ValueError:
+            print("Invalid input, try again")
+            continue
+          except EOFError:
+            clear_console()
+            return
+          if board.is_valid_move(row, col):
+            break
+          else:
+            print("Invalid move, try again")
+      board.add_move(row, col, player.symbol)
+      clear_console()
+      print(board)
+      winner = board.check_winner()
+      if winner:
+        print(f"{player.name} wins!")
+        player.points += 1
+        print_score(players)
+        if not replay(board):
           return
-        if board.is_valid_move(row, col):
-          board.add_move(row, col, player.symbol)
-          clear_console()
-          print(board)
-          winner = board.check_winner()
-          if winner:
-            print(f"{player.name} wins!")
-            player.points += 1
-            print_score(players)
-            if not replay(board):
-              return
-          elif board.is_full():
-            print("It's a tie!")
-            if not replay(board):
-              return
-          break
-        else:
-          print("Invalid move, try again")
+      elif board.is_full():
+        print("It's a tie!")
+        if not replay(board):
+          return
 
 def connect_four(players):
   board = c4.Grid()
