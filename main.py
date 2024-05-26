@@ -1,7 +1,8 @@
 import os
+import connect4.bot
 import tic.bot
-from tic import ttt
 from connect4 import c4
+from tic import ttt
 
 class Player:
   def __init__(self, name, symbol, is_cpu=False):
@@ -68,33 +69,37 @@ def connect_four(players):
   while True:
     for player in players:
       print(f"{player.name}'s turn")
-      while True:
-        try:
-          col = int(input("Enter column: "))
-        except ValueError:
-          print("Invalid input, try again")
-          continue
-        except EOFError:
-          clear_console()
+      if player.cpu:
+        move = connect4.bot.best_move(board, player.symbol)
+        col = move
+      else:
+        while True:
+          try:
+            col = int(input("Enter column: "))
+          except ValueError:
+            print("Invalid input, try again")
+            continue
+          except EOFError:
+            clear_console()
+            return
+          if board.is_valid_move(col):
+            break
+          else:
+            print("Invalid move, try again")
+      board.add_move(col, player.symbol)
+      clear_console()
+      print(board)
+      winner = board.check_winner()
+      if winner:
+        print(f"{player.name} wins!")
+        player.points += 1
+        print_score(players)
+        if not replay(board):
           return
-        if board.is_valid_move(col):
-          board.add_move(col, player.symbol)
-          clear_console()
-          print(board)
-          winner = board.check_winner()
-          if winner:
-            print(f"{player.name} wins!")
-            player.points += 1
-            print_score(players)
-            if not replay(board):
-              return
-          elif board.is_full():
-            print("It's a tie!")
-            if not replay(board):
-              return
-          break
-        else:
-          print("Invalid move, try again")
+      elif board.is_full():
+        print("It's a tie!")
+        if not replay(board):
+          return
 
 def clear_console():
     os.system("cls" if os.name == "nt" else "clear")
