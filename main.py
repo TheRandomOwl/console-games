@@ -106,7 +106,6 @@ def print_score(players):
 def main():
   p1 = Player("Player 1", "X")
   p2 = Player("Player 2", "O", True)
-  p2.cpu = True
   players = [p1, p2]
 
   options = {
