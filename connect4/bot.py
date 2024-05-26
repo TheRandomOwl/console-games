@@ -21,6 +21,7 @@ def evaluate_board(board, symbol):
     center_col = [row[3] for row in board.grid]
     score += center_col.count(symbol) * 5
 
+    # Check for 2 and 3 in a row horizontally
     for row in board.grid:
         if ' ' + opponent * 2 + ' ' in ''.join(row):
             score -= 10
