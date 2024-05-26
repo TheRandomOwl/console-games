@@ -1,6 +1,6 @@
 def minimax(board, symbol, maximizing):
     """
-    Minimax algorithm for tic-tac-toe with alpha beta pruning.
+    Minimax algorithm for tic-tac-toe.
 
     Parameters:
     - board: The current state of the tic-tac-toe board.
