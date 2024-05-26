@@ -8,7 +8,7 @@ class Player:
     self.name = name
     self.symbol = symbol
     self.points = 0
-    self.cpu = False
+    self.cpu = is_cpu
 
 def replay(b):
     play_again = input("Do you want to play again? (y/n): ")
